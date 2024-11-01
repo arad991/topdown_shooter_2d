@@ -38,7 +38,7 @@ curve = SubResource("Curve2D_5fida")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
 unique_name_in_owner = true
-position = Vector2(1574.39, -57.001)
+position = Vector2(1574.38, -57.001)
 rotation = 0.000616523
 progress = 5047.17
 

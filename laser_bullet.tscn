@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6l13gj01ei2j"]
+
+[ext_resource type="Script" path="res://laser_bullet.gd" id="1_a1lye"]
+[ext_resource type="Texture2D" uid="uid://dpjnse50sklw6" path="res://laser_gun/projectile.png" id="2_sua1m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pt7fw"]
+size = Vector2(68, 14)
+
+[node name="Bullet" type="Area2D"]
+top_level = true
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_a1lye")
+
+[node name="Projectile" type="Sprite2D" parent="."]
+position = Vector2(-25, 0)
+scale = Vector2(0.391304, 0.391304)
+texture = ExtResource("2_sua1m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-28, 0)
+shape = SubResource("RectangleShape2D_pt7fw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

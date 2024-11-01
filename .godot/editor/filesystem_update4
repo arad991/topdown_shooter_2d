@@ -11,3 +11,7 @@ res://bullet.tscn
 res://bullet.gd
 res://survivors_game.gd
 res://pine_tree.gd
+res://laser_gun.tscn
+res://laser_bullet.tscn
+res://laser_bullet.gd
+res://laser_gun.gd

@@ -14,12 +14,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func take_damage():
-	health -= 1
+func take_damage(damage):
+	health -= damage
 	%Slime.play_hurt()
 	
 	
-	if health == 0:
+	if health <= 0:
 		queue_free()
 		
 		const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")
