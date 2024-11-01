@@ -10,7 +10,7 @@ func _ready() -> void:
 	
 	
 func _process(delta: float) -> void:
-	if randf_range(0, 3) < 5:
+	if randf_range(0, 100) < 5:
 		spawn_tree()
 
 func spawn_tree():
@@ -26,8 +26,8 @@ func spawn_tree():
 		var spawn_y = player_pos.y + randf_range(-viewport_size.y * 1.5, viewport_size.y * 1.5)
 		# Ensure the spawn position is outside the player's immediate vicinity
 		var distance_to_player = player_pos.distance_to(Vector2(spawn_x, spawn_y))
-		if (spawn_x > player_pos.x - viewport_size.x / 2) and (spawn_x < player_pos.x + viewport_size.x / 2) and \
-		(spawn_y > player_pos.y - viewport_size.y / 2) and (spawn_y < player_pos.y + viewport_size.y / 2):
+		if (spawn_x > player_pos.x - viewport_size.x ) and (spawn_x < player_pos.x + viewport_size.x ) and \
+		(spawn_y > player_pos.y - viewport_size.y ) and (spawn_y < player_pos.y + viewport_size.y ):
 			continue
 		var new_tree = pine_tree.instantiate()
 		new_tree.global_position = Vector2(spawn_x, spawn_y)
