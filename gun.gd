@@ -2,10 +2,25 @@ extends Area2D
 
 
 func _physics_process(delta: float) -> void:
+	#var enemies_in_range = get_overlapping_bodies()
+	#if enemies_in_range.size() > 0:
+		#var target_enemy = enemies_in_range[0]
+		#look_at(target_enemy.global_position)
+		
 	var enemies_in_range = get_overlapping_bodies()
 	if enemies_in_range.size() > 0:
-		var target_enemy = enemies_in_range[0]
-		look_at(target_enemy.global_position)
+		var closest_enemy_distance = INF
+		var closest_enemy = null
+		
+		for enemy in enemies_in_range:
+			var distance_to_enemy = enemy.global_position.distance_to(global_position)
+			if distance_to_enemy < closest_enemy_distance:
+				closest_enemy_distance = distance_to_enemy
+				closest_enemy = enemy
+				
+		if closest_enemy:
+			look_at(closest_enemy.global_position)
+
 
 
 func shoot():

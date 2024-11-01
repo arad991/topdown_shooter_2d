@@ -1,7 +1,8 @@
 extends Node2D
 
 var player
-
+const max_distance_tree_from_player_to_remove = 900
+var trees_count = 0
 func _ready() -> void:
 	# Unpause the scene after it's been paused on player's death
 	if get_tree().paused == true:
@@ -10,9 +11,18 @@ func _ready() -> void:
 	
 	
 func _process(delta: float) -> void:
-	if randf_range(0, 100) < 5:
+	if randf_range(0, 10) < 5:
 		spawn_tree()
-
+	# Check and remove distant trees
+	for child in get_children():
+		if child.has_method("is_tree") and child.is_tree(): # Making sure the child node is a pine_tree node
+			var distance = child.global_position.distance_to(player.global_position)
+			if distance > max_distance_tree_from_player_to_remove:
+				child.queue_free()
+				trees_count -= 1
+	#print("This game has " + str(trees_count) +" trees")
+	
+	
 func spawn_tree():
 	var pine_tree = preload("res://pine_tree.tscn")
 	var player_pos = player.global_position
@@ -31,11 +41,11 @@ func spawn_tree():
 			continue
 		var new_tree = pine_tree.instantiate()
 		new_tree.global_position = Vector2(spawn_x, spawn_y)
-
 		# Check for collisions with existing objects
 		var collision = new_tree.move_and_collide(Vector2.ZERO)
 		if collision == null:
 			add_child(new_tree)
+			trees_count+=1
 			break
 		else:
 			new_tree.queue_free()
