@@ -1,14 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://bx7jqvs8er1ee"]
+[gd_scene load_steps=7 format=3 uid="uid://bx7jqvs8er1ee"]
 
 [ext_resource type="PackedScene" uid="uid://chld75je6ysiw" path="res://player.tscn" id="1_ru3bt"]
 [ext_resource type="Script" path="res://survivors_game.gd" id="1_x6re0"]
-[ext_resource type="PackedScene" uid="uid://ddbolsr7opvos" path="res://pine_tree.tscn" id="2_mwdu0"]
 
 [sub_resource type="Curve2D" id="Curve2D_5fida"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 1576, -57, 0, 0, 0, 0, 1576, 843, 0, 0, 0, 0, -46, 847, 0, 0, 0, 0, -46, -58, 0, 0, 0, 0, 1576, -57)
 }
 point_count = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjkk1"]
+bg_color = Color(0.497445, 0.619254, 0.70232, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgt68"]
+bg_color = Color(0.396984, 0.651431, 0.6599, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2cri"]
+bg_color = Color(0.607254, 0.604628, 0.544372, 1)
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -34,27 +42,6 @@ position = Vector2(1574.39, -57.001)
 rotation = 0.000616523
 progress = 5047.17
 
-[node name="PineTree" parent="." instance=ExtResource("2_mwdu0")]
-position = Vector2(133, 533)
-
-[node name="PineTree2" parent="." instance=ExtResource("2_mwdu0")]
-position = Vector2(193, 156)
-
-[node name="PineTree3" parent="." instance=ExtResource("2_mwdu0")]
-position = Vector2(1250, 141)
-
-[node name="PineTree4" parent="." instance=ExtResource("2_mwdu0")]
-position = Vector2(1335, 175)
-
-[node name="PineTree5" parent="." instance=ExtResource("2_mwdu0")]
-position = Vector2(1245, 192)
-
-[node name="PineTree6" parent="." instance=ExtResource("2_mwdu0")]
-position = Vector2(1287, 606)
-
-[node name="PineTree7" parent="." instance=ExtResource("2_mwdu0")]
-position = Vector2(1202, 640)
-
 [node name="MobSpawner" type="Timer" parent="."]
 wait_time = 0.3
 autostart = true
@@ -71,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.482353)
 
-[node name="Label" type="Label" parent="GameOver/ColorRect"]
+[node name="GameOverLabel" type="Label" parent="GameOver/ColorRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -87,5 +74,25 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 176
 text = "Game Over"
 
+[node name="RestartGame" type="Button" parent="GameOver/ColorRect"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.0
+offset_top = 140.0
+offset_right = 159.0
+offset_bottom = 232.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_jjkk1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wgt68")
+theme_override_styles/normal = SubResource("StyleBoxFlat_e2cri")
+text = "Again!"
+
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="MobSpawner" to="." method="_on_mob_spawner_timeout"]
+[connection signal="pressed" from="GameOver/ColorRect/RestartGame" to="." method="_on_button_pressed"]
