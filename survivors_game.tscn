@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx7jqvs8er1ee"]
+[gd_scene load_steps=8 format=3 uid="uid://bx7jqvs8er1ee"]
 
 [ext_resource type="PackedScene" uid="uid://chld75je6ysiw" path="res://player.tscn" id="1_ru3bt"]
 [ext_resource type="Script" path="res://survivors_game.gd" id="1_x6re0"]
@@ -18,14 +18,16 @@ bg_color = Color(0.396984, 0.651431, 0.6599, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2cri"]
 bg_color = Color(0.607254, 0.604628, 0.544372, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jq63f"]
+
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_x6re0")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="BackgroundLayout" type="CanvasLayer" parent="."]
 layer = -30
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="BackgroundLayout"]
 offset_right = 1511.0
 offset_bottom = 762.0
 
@@ -92,6 +94,23 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_jjkk1")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_wgt68")
 theme_override_styles/normal = SubResource("StyleBoxFlat_e2cri")
 text = "Again!"
+
+[node name="ScoreLayout" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="ScoreLayout"]
+layout_direction = 1
+offset_right = 295.0
+offset_bottom = 131.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jq63f")
+
+[node name="Score" type="Label" parent="ScoreLayout/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 138.0
+offset_bottom = 55.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "SCORE:"
 
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="MobSpawner" to="." method="_on_mob_spawner_timeout"]

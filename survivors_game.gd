@@ -1,13 +1,16 @@
 extends Node2D
 
 var player
+
 const max_distance_tree_from_player_to_remove = 900
 var trees_count = 0
+
 func _ready() -> void:
 	# Unpause the scene after it's been paused on player's death
 	if get_tree().paused == true:
 		get_tree().paused = false
 	player = get_node("Player")
+	%Score.text = "Score: " + str(player.score)
 	
 	
 func _process(delta: float) -> void:
@@ -21,7 +24,7 @@ func _process(delta: float) -> void:
 				child.queue_free()
 				trees_count -= 1
 	#print("This game has " + str(trees_count) +" trees")
-	
+	%Score.text = "Score: " + str(player.score)
 	
 func spawn_tree():
 	var pine_tree = preload("res://pine_tree.tscn")

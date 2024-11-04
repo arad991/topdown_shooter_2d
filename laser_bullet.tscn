@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dpjnse50sklw6" path="res://laser_gun/projectile.png" id="2_sua1m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pt7fw"]
-size = Vector2(68, 14)
+size = Vector2(102, 18)
 
 [node name="Bullet" type="Area2D"]
 top_level = true
@@ -14,7 +14,7 @@ script = ExtResource("1_a1lye")
 
 [node name="Projectile" type="Sprite2D" parent="."]
 position = Vector2(-25, 0)
-scale = Vector2(0.391304, 0.391304)
+scale = Vector2(0.559242, 0.586957)
 texture = ExtResource("2_sua1m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

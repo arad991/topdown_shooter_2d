@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal health_depleted
+var score = 0
 
 var health = 100.0
 const PLAYER_SPEED = 600.0

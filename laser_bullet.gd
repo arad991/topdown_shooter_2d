@@ -16,5 +16,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	# Only react when hitting an enemy object
 	if body.has_method("take_damage"):
 		body.take_damage(BULLET_DAMAGE)
+	elif body.has_method("is_tree"):
+		queue_free()
