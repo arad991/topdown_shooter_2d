@@ -34,8 +34,8 @@ func shoot():
 	new_bullet.global_position = %LaserShootingPoint.global_position
 	new_bullet.global_rotation = %LaserShootingPoint.global_rotation
 	
-	
-	
-
 func _on_timer_timeout() -> void:
 	shoot()
+
+func is_weapon() -> bool:
+	return true

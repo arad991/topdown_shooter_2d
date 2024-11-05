@@ -1,9 +1,9 @@
 CanvasLayer
+Button
 Label
 Panel
 AnimatedSprite2D
 AnimationPlayer
-Button
 ColorRect
 Timer
 PathFollow2D

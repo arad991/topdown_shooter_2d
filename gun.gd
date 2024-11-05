@@ -1,5 +1,6 @@
 extends Area2D
 
+var is_jammed = false
 
 func _physics_process(delta: float) -> void:
 	#var enemies_in_range = get_overlapping_bodies()
@@ -30,8 +31,12 @@ func shoot():
 	new_bullet.global_position = %ShootingPoint.global_position
 	new_bullet.global_rotation = %ShootingPoint.global_rotation
 	
-	
-	
-
 func _on_timer_timeout() -> void:
+	#if not is_jammed():
 	shoot()
+
+func disable_bullets() -> void:
+	pass
+
+func is_weapon() -> bool:
+	return true

@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
 var health = 3
+const SCORE_ON_KILLED = 1
 
 @onready var player: CharacterBody2D = get_node("/root/Game/Player")
 @onready var score_label: Label = %Score
-@onready var game: Node2D = $"."
+@onready var game_manager: Node2D = get_node("/root/Game")
 
 func _ready() -> void:
 	%Slime.play_walk()
@@ -22,7 +23,7 @@ func take_damage(damage):
 	
 	
 	if health <= 0:
-		player.score += 1
+		game_manager.add_score(SCORE_ON_KILLED)
 		queue_free()
 		
 		const SMOKE_SCENE = preload("res://smoke_explosion/smoke_explosion.tscn")

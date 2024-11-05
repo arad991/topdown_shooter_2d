@@ -25,6 +25,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 9
 motion_mode = 1
 platform_floor_layers = 4294967040
 script = ExtResource("1_lr0y4")
@@ -43,7 +44,7 @@ shape = SubResource("CircleShape2D_0od0o")
 [node name="HurtBox" type="Area2D" parent="."]
 unique_name_in_owner = true
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -27)
@@ -60,3 +61,5 @@ theme_override_styles/background = SubResource("StyleBoxFlat_hiv36")
 theme_override_styles/fill = SubResource("StyleBoxFlat_xrqs2")
 value = 100.0
 show_percentage = false
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
