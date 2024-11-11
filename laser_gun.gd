@@ -45,9 +45,6 @@ func _on_player_detector_body_entered(body: Node2D) -> void:
 			body.pickup_and_change_weapon(self)
 			%FloatingAnimation.stop()
 			position = Vector2.ZERO
-			print("THIS IS THE LASER GUN")
-		else:
-			print("THIS IS NOT THE PLAYER BODY THAT HAS BEEN RECOGNIZED !!!!")
 
 
 func _on_ready_for_animation() -> void:

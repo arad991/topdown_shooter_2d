@@ -104,7 +104,6 @@ func spawn_weapon():
 		if not collision_detected:
 			#new_weapon.process_mode = PROCESS_MODE_DISABLED
 			add_child(new_weapon)
-			print(new_weapon.global_position)
 			break
 		else:
 			new_weapon.queue_free()
