@@ -36,12 +36,6 @@ func _physics_process(delta: float) -> void:
 
 func get_current_gun_node() -> Area2D:
 	return current_weapon
-	#if get_node("LaserGun") != null:
-		#return get_node("LaserGun")
-	#elif get_node("Gun") != null:
-		#return get_node("Gun")
-	#else: #No gun is equipped (impossible for now)
-		#return null
 
 func pickup_and_change_weapon(weapon) -> void:
 	if weapon.has_method("is_weapon") and weapon.is_weapon() and weapon != current_weapon:

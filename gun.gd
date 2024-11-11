@@ -1,14 +1,21 @@
-extends Area2D
+extends Node2D
 
 var is_jammed = false
+@export var on_floor: bool = false
+@onready var player_detector: Area2D = $PlayerDetector
+@onready var spawn_detector: Area2D = $WeaponPivot/Pistol/SpawnDetector
+
+func _ready() -> void:
+	if not on_floor:
+		player_detector.set_collision_mask_value(8,false) # player mask
+		
 
 func _physics_process(delta: float) -> void:
-	#var enemies_in_range = get_overlapping_bodies()
-	#if enemies_in_range.size() > 0:
-		#var target_enemy = enemies_in_range[0]
-		#look_at(target_enemy.global_position)
+		_pistol_shoot_logic() # makes the pistol aim to the nearest enemy
 		
-	var enemies_in_range = get_overlapping_bodies()
+
+func _pistol_shoot_logic() -> void:
+	var enemies_in_range = spawn_detector.get_overlapping_bodies()
 	if enemies_in_range.size() > 0:
 		var closest_enemy_distance = INF
 		var closest_enemy = null
@@ -22,9 +29,7 @@ func _physics_process(delta: float) -> void:
 		if closest_enemy:
 			look_at(closest_enemy.global_position)
 
-
-
-func shoot():
+func shoot() -> void:
 	const BULLET = preload("res://bullet.tscn")
 	var new_bullet = BULLET.instantiate()
 	%ShootingPoint.add_child(new_bullet)

@@ -72,7 +72,7 @@ func spawn_mob():
 func spawn_weapon():
 	var weapons_array = [preload("res://gun.tscn"), preload("res://laser_gun.tscn")]
 	#var selected_weapon_index = randi() % (weapons_array.size())
-	var selected_weapon_index = 1
+	var selected_weapon_index = 0
 	# TODO: Add slot adaptility, for future multipule weapon holdings
 	# For now, we assume the player always can equip the picked up weapon (slot wise)
 	var player_pos = player.global_position
@@ -92,7 +92,7 @@ func spawn_weapon():
 		new_weapon.on_floor = true
 		new_weapon.global_position = Vector2(spawn_x, spawn_y)
 		
-		# Check for collisions with existing objects
+		# Check for collisions with existing objects # TODO: handle dynamically each gun and its spawn_detector node retrieval 
 		var overlapping_bodies = new_weapon.get_node("WeaponPivot").get_child(0).get_child(1).get_overlapping_bodies()
 
 		# Check if any overlapping body is of type Area2D

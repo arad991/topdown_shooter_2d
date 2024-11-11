@@ -63,5 +63,5 @@ position = Vector2(113, -2)
 rotation = -1.57175
 shape = SubResource("CapsuleShape2D_aj57c")
 
-[connection signal="timeout" from="ShootTimer" to="WeaponPivot/LaserGun/SpawnDetector" method="_on_timer_timeout"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

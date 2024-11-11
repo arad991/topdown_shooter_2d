@@ -26,8 +26,8 @@ func shoot():
 	
 	
 func _on_timer_timeout() -> void:
-	print("I SHOOT!")
-	shoot()
+	if not on_floor:
+		shoot()
 
 
 func is_weapon() -> bool:
