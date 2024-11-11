@@ -1,31 +1,21 @@
-extends Area2D
+extends Node2D
 
+@export var on_floor: bool = false
+@onready var player_detector: Area2D = $PlayerDetector
+
+func _ready() -> void:
+	if not on_floor:
+		player_detector.set_collision_mask_value(8,false) # player mask
+		var mouse_pos = get_global_mouse_position()
+		# Aim the gun at the mouse position
+		look_at(mouse_pos)
 
 func _physics_process(delta: float) -> void:
-	#var enemies_in_range = get_overlapping_bodies()
-	#if enemies_in_range.size() > 0:
-		#var target_enemy = enemies_in_range[0]
-		#look_at(target_enemy.global_position)
-		# Get the mouse position in world coordinates
-	var mouse_pos = get_global_mouse_position()
-
-	# Aim the gun at the mouse position
-	look_at(mouse_pos)
-	#var enemies_in_range = get_overlapping_bodies()
-	#if enemies_in_range.size() > 0:
-		#var closest_enemy_distance = INF
-		#var closest_enemy = null
-		#
-		#for enemy in enemies_in_range:
-			#var distance_to_enemy = enemy.global_position.distance_to(global_position)
-			#if distance_to_enemy < closest_enemy_distance:
-				#closest_enemy_distance = distance_to_enemy
-				#closest_enemy = enemy
-				#
-		#if closest_enemy:
-			#look_at(closest_enemy.global_position)
-
-
+	if not on_floor:
+		var mouse_pos = get_global_mouse_position()
+		# Aim the gun at the mouse position
+		look_at(mouse_pos)
+		
 
 func shoot():
 	const BULLET = preload("res://laser_bullet.tscn")
@@ -34,8 +24,21 @@ func shoot():
 	new_bullet.global_position = %LaserShootingPoint.global_position
 	new_bullet.global_rotation = %LaserShootingPoint.global_rotation
 	
+	
 func _on_timer_timeout() -> void:
+	print("I SHOOT!")
 	shoot()
+
 
 func is_weapon() -> bool:
 	return true
+
+
+func _on_player_detector_body_entered(body: Node2D) -> void:
+	if body != null:
+		player_detector.set_collision_mask_value(8,false) # player mask
+		if body.has_method("pickup_and_change_weapon"):
+			body.pickup_and_change_weapon(self)
+			position = Vector2.ZERO
+		else:
+			print("THIS IS NOT THE PLAYER BODY THAT HAS BEEN RECOGNIZED !!!!")

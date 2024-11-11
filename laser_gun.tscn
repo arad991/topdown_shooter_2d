@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtg6c05bdvx2v"]
+[gd_scene load_steps=7 format=3 uid="uid://dtg6c05bdvx2v"]
 
 [ext_resource type="Script" path="res://laser_gun.gd" id="1_x2iob"]
 [ext_resource type="Texture2D" uid="uid://chiu11br7pb0b" path="res://laser_gun/laser_gun.png" id="2_n0ylh"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_hrcce"]
-radius = 389.021
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02311"]
 atlas = ExtResource("2_n0ylh")
@@ -21,15 +18,20 @@ animations = [{
 "speed": 0.0
 }]
 
-[node name="LaserGun" type="Area2D"]
-position = Vector2(-35, -24)
-collision_layer = 8
-collision_mask = 2
-input_pickable = false
+[sub_resource type="CircleShape2D" id="CircleShape2D_hrcce"]
+radius = 389.021
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aj57c"]
+radius = 23.0
+height = 129.902
+
+[node name="LaserGun" type="Node2D"]
 script = ExtResource("1_x2iob")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_hrcce")
+[node name="ShootTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.3
+autostart = true
 
 [node name="WeaponPivot" type="Marker2D" parent="."]
 
@@ -42,8 +44,24 @@ sprite_frames = SubResource("SpriteFrames_b1efh")
 unique_name_in_owner = true
 position = Vector2(16.9857, -1.96154)
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.3
-autostart = true
+[node name="SpawnDetector" type="Area2D" parent="WeaponPivot/LaserGun"]
+position = Vector2(-43.9286, -7.84615)
+scale = Vector2(0.292857, 0.326923)
+collision_layer = 0
+collision_mask = 3
+input_pickable = false
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPivot/LaserGun/SpawnDetector"]
+shape = SubResource("CircleShape2D_hrcce")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(113, -2)
+rotation = -1.57175
+shape = SubResource("CapsuleShape2D_aj57c")
+
+[connection signal="timeout" from="ShootTimer" to="WeaponPivot/LaserGun/SpawnDetector" method="_on_timer_timeout"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

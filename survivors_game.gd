@@ -1,5 +1,6 @@
 extends Node2D
 
+
 var player
 var score = 0
 const max_distance_tree_from_player_to_remove = 900
@@ -22,8 +23,8 @@ func _process(delta: float) -> void:
 	if randf_range(0, 10) < 5:
 		spawn_tree()
 		spawn_weapon()
-	if randf_range(0, 100) < 5:
-		spawn_weapon()
+	#if randf_range(0, 100) < 5: #TODO : enable this when running the game NOT to debug
+		#spawn_weapon() 
 	# Check and remove distant trees
 	for child in get_children():
 		if (child.has_method("is_tree") and child.is_tree() or (child.has_method("is_weapon") and child.is_weapon())): # Making sure the child node is a pine_tree node
@@ -70,7 +71,8 @@ func spawn_mob():
 	
 func spawn_weapon():
 	var weapons_array = [preload("res://gun.tscn"), preload("res://laser_gun.tscn")]
-	var selected_weapon_index = randi() % (weapons_array.size())
+	#var selected_weapon_index = randi() % (weapons_array.size())
+	var selected_weapon_index = 1
 	# TODO: Add slot adaptility, for future multipule weapon holdings
 	# For now, we assume the player always can equip the picked up weapon (slot wise)
 	var player_pos = player.global_position
@@ -87,10 +89,11 @@ func spawn_weapon():
 		(spawn_y > player_pos.y - viewport_size.y ) and (spawn_y < player_pos.y + viewport_size.y ):
 			continue
 		var new_weapon = weapons_array[selected_weapon_index].instantiate()
+		new_weapon.on_floor = true
 		new_weapon.global_position = Vector2(spawn_x, spawn_y)
 		
 		# Check for collisions with existing objects
-		var overlapping_bodies = new_weapon.get_overlapping_bodies()
+		var overlapping_bodies = new_weapon.get_node("WeaponPivot").get_child(0).get_child(1).get_overlapping_bodies()
 
 		# Check if any overlapping body is of type Area2D
 		var collision_detected = false

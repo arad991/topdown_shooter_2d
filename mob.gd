@@ -4,12 +4,10 @@ var health = 3
 const SCORE_ON_KILLED = 1
 
 @onready var player: CharacterBody2D = get_node("/root/Game/Player")
-@onready var score_label: Label = %Score
 @onready var game_manager: Node2D = get_node("/root/Game")
 
 func _ready() -> void:
 	%Slime.play_walk()
-	var player = get_node("Player")
 
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
