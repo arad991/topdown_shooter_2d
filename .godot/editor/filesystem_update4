@@ -7,3 +7,5 @@ res://survivors_game.tscn
 res://player.tscn
 res://mob.tscn
 res://player.gd
+res://laser_gun.gd
+res://characters/slime/slime.tscn

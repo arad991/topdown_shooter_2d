@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtg6c05bdvx2v"]
+[gd_scene load_steps=10 format=3 uid="uid://dtg6c05bdvx2v"]
 
 [ext_resource type="Script" path="res://laser_gun.gd" id="1_x2iob"]
 [ext_resource type="Texture2D" uid="uid://chiu11br7pb0b" path="res://laser_gun/laser_gun.png" id="2_n0ylh"]
@@ -15,11 +15,48 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 0.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hrcce"]
 radius = 389.021
+
+[sub_resource type="Animation" id="Animation_780pw"]
+resource_name = "float"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(115, -2.5), Vector2(115, -5), Vector2(115, -10)]
+}
+
+[sub_resource type="Animation" id="Animation_q7dvo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6211t"]
+_data = {
+"RESET": SubResource("Animation_q7dvo"),
+"float": SubResource("Animation_780pw")
+}
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aj57c"]
 radius = 23.0
@@ -36,9 +73,9 @@ autostart = true
 [node name="WeaponPivot" type="Marker2D" parent="."]
 
 [node name="LaserGun" type="AnimatedSprite2D" parent="WeaponPivot"]
-position = Vector2(115, 0)
 scale = Vector2(3.41463, 3.05882)
 sprite_frames = SubResource("SpriteFrames_b1efh")
+autoplay = "default"
 
 [node name="LaserShootingPoint" type="Marker2D" parent="WeaponPivot/LaserGun"]
 unique_name_in_owner = true
@@ -54,6 +91,14 @@ input_pickable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPivot/LaserGun/SpawnDetector"]
 shape = SubResource("CircleShape2D_hrcce")
 
+[node name="FloatingAnimation" type="AnimationPlayer" parent="WeaponPivot"]
+unique_name_in_owner = true
+root_node = NodePath("../LaserGun")
+libraries = {
+"": SubResource("AnimationLibrary_6211t")
+}
+autoplay = "float"
+
 [node name="PlayerDetector" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 128
@@ -63,5 +108,6 @@ position = Vector2(113, -2)
 rotation = -1.57175
 shape = SubResource("CapsuleShape2D_aj57c")
 
+[connection signal="ready_for_animation" from="." to="." method="_on_ready_for_animation"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

@@ -56,10 +56,3 @@ func pickup_and_change_weapon(weapon) -> void:
 		if current_weapon:
 			current_weapon.queue_free()
 		current_weapon = weapon
-
-#func _on_hurt_box_area_entered(area: Area2D) -> void:
-	#var current_gun = get_current_gun_node()
-	#if area.has_method("is_weapon") and area.is_weapon() and area != current_gun:
-		#area.process_mode = Node.PROCESS_MODE_INHERIT
-		#remove_child(current_gun)
-		#add_child(area) # Equip the weapon
