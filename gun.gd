@@ -11,6 +11,7 @@ func _ready() -> void:
 		
 
 func _physics_process(delta: float) -> void:
+	if not on_floor:
 		_pistol_shoot_logic() # makes the pistol aim to the nearest enemy
 		
 
@@ -36,12 +37,25 @@ func shoot() -> void:
 	new_bullet.global_position = %ShootingPoint.global_position
 	new_bullet.global_rotation = %ShootingPoint.global_rotation
 	
-func _on_timer_timeout() -> void:
-	#if not is_jammed():
-	shoot()
 
 func disable_bullets() -> void:
 	pass
 
 func is_weapon() -> bool:
 	return true
+
+
+func _on_player_detector_body_entered(body: Node2D) -> void:
+	if body != null:
+		player_detector.set_collision_mask_value(8,false) # player mask
+		if body.has_method("pickup_and_change_weapon"):
+			body.pickup_and_change_weapon(self)
+			position = Vector2.ZERO
+			print("THIS IS THE PISTOL")
+		else:
+			print("THIS IS NOT THE PLAYER BODY THAT HAS BEEN RECOGNIZED !!!!")
+
+
+func _on_shoot_timer_timeout() -> void:
+	if not on_floor: #TODO : Add jammed/overheat pistol system
+		shoot()

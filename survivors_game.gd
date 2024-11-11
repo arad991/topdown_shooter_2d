@@ -71,8 +71,8 @@ func spawn_mob():
 	
 func spawn_weapon():
 	var weapons_array = [preload("res://gun.tscn"), preload("res://laser_gun.tscn")]
-	#var selected_weapon_index = randi() % (weapons_array.size())
-	var selected_weapon_index = 0
+	var selected_weapon_index = randi() % (weapons_array.size())
+	#var selected_weapon_index = 0
 	# TODO: Add slot adaptility, for future multipule weapon holdings
 	# For now, we assume the player always can equip the picked up weapon (slot wise)
 	var player_pos = player.global_position

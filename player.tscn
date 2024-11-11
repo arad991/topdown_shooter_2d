@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://player.gd" id="1_lr0y4"]
 [ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="2_kpxss"]
-[ext_resource type="PackedScene" uid="uid://dtg6c05bdvx2v" path="res://laser_gun.tscn" id="4_pq3kl"]
+[ext_resource type="PackedScene" uid="uid://0e8xogo0sntl" path="res://gun.tscn" id="3_rp1s2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0od0o"]
 radius = 44.0114
@@ -40,8 +40,6 @@ shape = SubResource("CircleShape2D_0od0o")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="LaserGun" parent="." instance=ExtResource("4_pq3kl")]
-
 [node name="HurtBox" type="Area2D" parent="."]
 unique_name_in_owner = true
 collision_layer = 0
@@ -62,5 +60,7 @@ theme_override_styles/background = SubResource("StyleBoxFlat_hiv36")
 theme_override_styles/fill = SubResource("StyleBoxFlat_xrqs2")
 value = 100.0
 show_percentage = false
+
+[node name="Pistol" parent="." instance=ExtResource("3_rp1s2")]
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

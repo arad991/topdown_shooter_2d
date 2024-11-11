@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://gun.gd" id="1_ptbya"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_75ks7"]
-radius = 389.021
+radius = 1167.9
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nkfy6"]
 radius = 32.9981
@@ -14,6 +14,7 @@ height = 77.998
 script = ExtResource("1_ptbya")
 
 [node name="ShootTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 0.3
 autostart = true
 
@@ -28,7 +29,7 @@ unique_name_in_owner = true
 position = Vector2(25, -11)
 
 [node name="SpawnDetector" type="Area2D" parent="WeaponPivot/Pistol"]
-position = Vector2(-134.929, -9.84615)
+position = Vector2(-47, -9.84615)
 scale = Vector2(0.292857, 0.326923)
 collision_layer = 0
 collision_mask = 3
@@ -45,3 +46,6 @@ collision_mask = 128
 position = Vector2(92, 1)
 rotation = -1.57175
 shape = SubResource("CapsuleShape2D_nkfy6")
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

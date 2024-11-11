@@ -40,5 +40,6 @@ func _on_player_detector_body_entered(body: Node2D) -> void:
 		if body.has_method("pickup_and_change_weapon"):
 			body.pickup_and_change_weapon(self)
 			position = Vector2.ZERO
+			print("THIS IS THE LASER GUN")
 		else:
 			print("THIS IS NOT THE PLAYER BODY THAT HAS BEEN RECOGNIZED !!!!")

@@ -12,7 +12,10 @@ enum GunType {
 }
 
 func _ready() -> void:
+	#TODO: dynamically get the current_weapon node for the first time
 	current_weapon = get_node("LaserGun")
+	if not current_weapon:
+		current_weapon = get_node("Pistol")
 
 
 func _process(delta: float) -> void:
