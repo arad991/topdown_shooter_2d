@@ -71,6 +71,7 @@ wait_time = 0.066
 autostart = true
 
 [node name="WeaponPivot" type="Marker2D" parent="."]
+position = Vector2(-30, 0)
 
 [node name="LaserGun" type="AnimatedSprite2D" parent="WeaponPivot"]
 scale = Vector2(3.41463, 3.05882)
@@ -85,7 +86,7 @@ position = Vector2(16.9857, -1.96154)
 position = Vector2(-43.9286, -7.84615)
 scale = Vector2(0.292857, 0.326923)
 collision_layer = 0
-collision_mask = 3
+collision_mask = 19
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPivot/LaserGun/SpawnDetector"]
@@ -100,6 +101,7 @@ libraries = {
 autoplay = "float"
 
 [node name="PlayerDetector" type="Area2D" parent="."]
+position = Vector2(-30, 0)
 collision_layer = 16
 collision_mask = 128
 

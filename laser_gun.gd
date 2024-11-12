@@ -1,12 +1,10 @@
 extends Node2D
 
 @export var on_floor: bool = false
-@export var weapon_global_position_y = global_position.y
 @onready var player_detector: Area2D = $PlayerDetector
 signal ready_for_animation
 
 func _ready() -> void:
-	weapon_global_position_y = global_position.y
 	if not on_floor:
 		player_detector.set_collision_mask_value(8,false) # player mask
 		var mouse_pos = get_global_mouse_position()

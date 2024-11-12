@@ -9,3 +9,5 @@ res://mob.tscn
 res://player.gd
 res://laser_gun.gd
 res://characters/slime/slime.tscn
+res://main_menu.tscn
+res://main_menu.gd

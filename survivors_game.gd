@@ -71,8 +71,8 @@ func spawn_mob():
 	
 func spawn_weapon():
 	var weapons_array = [preload("res://gun.tscn"), preload("res://laser_gun.tscn")]
-	#var selected_weapon_index = randi() % (weapons_array.size())
-	var selected_weapon_index = 1
+	var selected_weapon_index = randi() % (weapons_array.size())
+	#var selected_weapon_index = 1
 	# TODO: Add slot adaptility, for future multipule weapon holdings
 	# For now, we assume the player always can equip the picked up weapon (slot wise)
 	var player_pos = player.global_position
@@ -85,8 +85,8 @@ func spawn_weapon():
 		var spawn_y = player_pos.y + randf_range(-viewport_size.y * 1.5, viewport_size.y * 1.5)
 		# Ensure the spawn position is outside the player's immediate vicinity
 		var distance_to_player = player_pos.distance_to(Vector2(spawn_x, spawn_y))
-		if (spawn_x > player_pos.x - viewport_size.x ) and (spawn_x < player_pos.x + viewport_size.x ) and \
-		(spawn_y > player_pos.y - viewport_size.y ) and (spawn_y < player_pos.y + viewport_size.y ):
+		#TODO: make is shorter with a function with clear names, add conditions such as proximity to different weapons..
+		if is_position_within_viewport(spawn_x, spawn_y, viewport_size, player_pos) or not is_near_weapon():
 			continue
 		var new_weapon = weapons_array[selected_weapon_index].instantiate()
 		new_weapon.on_floor = true
@@ -94,8 +94,7 @@ func spawn_weapon():
 		
 		# Check for collisions with existing objects # TODO: handle dynamically each gun and its spawn_detector node retrieval 
 		var overlapping_bodies = new_weapon.get_node("WeaponPivot").get_child(0).get_child(1).get_overlapping_bodies()
-
-		# Check if any overlapping body is of type Area2D
+		# Check if any overlapping body is inside the weapon's spawn detector
 		var collision_detected = false
 		for body in overlapping_bodies:
 			if body != null:
@@ -112,6 +111,13 @@ func spawn_weapon():
 		print("Failed to find a suitable spawn position")
 
 
+func is_position_within_viewport(spawn_x, spawn_y, viewport_size, player_position) -> bool:
+	return (spawn_x > player_position.x - viewport_size.x ) and (spawn_x < player_position.x + viewport_size.x ) and \
+		(spawn_y > player_position.y - viewport_size.y ) and (spawn_y < player_position.y + viewport_size.y )
+
+func is_near_weapon() -> bool:
+	return true
+	
 func _on_mob_spawner_timeout() -> void:
 	spawn_mob()
 
@@ -131,3 +137,7 @@ func add_score(score_to_add) -> void:
 func _on_resume_button_pressed() -> void:
 	%PausePanel.hide()
 	get_tree().paused = false
+
+
+func _on_main_menu_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://main_menu.tscn")

@@ -42,14 +42,11 @@ func get_current_gun_node() -> Area2D:
 
 func pickup_and_change_weapon(weapon) -> void:
 	if weapon.has_method("is_weapon") and weapon.is_weapon() and weapon != current_weapon:
-		var childs = get_children()
 		remove_child(current_weapon)
 		# Removing the weapon from its main_game parent so it can be added as a child to the player's node
 		weapon.get_parent().remove_child(weapon) 
 		add_child(weapon)
-		childs = get_children()
 		weapon.owner = self
-		childs = get_children()
 		#weapon_slots.call_deferred("add_child", weapon) #TODO: add weapon slots parent for multiple weapons
 		#weapon.set_deferred("owner", weapon_slots)
 		weapon.on_floor = false

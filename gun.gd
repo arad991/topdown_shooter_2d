@@ -4,10 +4,13 @@ var is_jammed = false
 @export var on_floor: bool = false
 @onready var player_detector: Area2D = $PlayerDetector
 @onready var spawn_detector: Area2D = $WeaponPivot/Pistol/SpawnDetector
+signal ready_for_animation
 
 func _ready() -> void:
 	if not on_floor:
 		player_detector.set_collision_mask_value(8,false) # player mask
+	else:
+		ready_for_animation.emit()
 		
 
 func _physics_process(delta: float) -> void:
@@ -22,6 +25,8 @@ func _pistol_shoot_logic() -> void:
 		var closest_enemy = null
 		
 		for enemy in enemies_in_range:
+			if enemy.has_method("is_tree"):
+				continue
 			var distance_to_enemy = enemy.global_position.distance_to(global_position)
 			if distance_to_enemy < closest_enemy_distance:
 				closest_enemy_distance = distance_to_enemy
@@ -50,12 +55,14 @@ func _on_player_detector_body_entered(body: Node2D) -> void:
 		player_detector.set_collision_mask_value(8,false) # player mask
 		if body.has_method("pickup_and_change_weapon"):
 			body.pickup_and_change_weapon(self)
+			%FloatingAnimation.stop()
 			position = Vector2.ZERO
-			print("THIS IS THE PISTOL")
-		else:
-			print("THIS IS NOT THE PLAYER BODY THAT HAS BEEN RECOGNIZED !!!!")
 
 
 func _on_shoot_timer_timeout() -> void:
 	if not on_floor: #TODO : Add jammed/overheat pistol system
 		shoot()
+
+
+func _on_ready_for_animation() -> void:
+	%FloatingAnimation.play("float")
