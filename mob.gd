@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var health = 3
+var health = 2
 const SCORE_ON_KILLED = 1
 
 @onready var player: CharacterBody2D = get_node("/root/Game/Player")
@@ -28,3 +28,5 @@ func take_damage(damage):
 		var smoke = SMOKE_SCENE.instantiate()
 		get_parent().add_child(smoke)
 		smoke.global_position = global_position
+		var mob_size = self.scale  # Get the mob's size from its AABB
+		smoke.scale = mob_size  # Scale the smoke node using the mob size

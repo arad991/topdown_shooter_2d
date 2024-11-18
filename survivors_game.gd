@@ -22,9 +22,9 @@ func _process(delta: float) -> void:
 		
 	if randf_range(0, 10) < 5:
 		spawn_tree()
-		spawn_weapon()
-	#if randf_range(0, 100) < 5: #TODO : enable this when running the game NOT to debug
-		#spawn_weapon() 
+		#spawn_weapon()
+	if randf_range(0, 10) < 5: #TODO : enable this when running the game NOT to debug
+		spawn_weapon() 
 	# Check and remove distant trees
 	for child in get_children():
 		if (child.has_method("is_tree") and child.is_tree() or (child.has_method("is_weapon") and child.is_weapon())): # Making sure the child node is a pine_tree node
@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 	%Score.text = "Score: " + str(score)
 	
 func spawn_tree():
-	var pine_tree = preload("res://pine_tree.tscn")
+	var pine_tree = preload("res://scenes/pine_tree.tscn")
 	var player_pos = player.global_position
 	var viewport_size = get_viewport().size
 
@@ -64,13 +64,17 @@ func spawn_tree():
 		print("Failed to find a suitable spawn position")
 
 func spawn_mob():
-	var new_mob = preload("res://mob.tscn").instantiate()
+	var mobs_array = [preload("res://scenes/mob.tscn"), preload("res://scenes/big_demon.tscn"), preload("res://scenes/small_demon.tscn")]
+	#var new_mob = preload("res://scenes/mob.tscn").instantiate()
+	#var selected_mob_index = randi() % (mobs_array.size())
+	var selected_mob_index = 1
+	var new_mob = mobs_array[selected_mob_index].instantiate()
 	%PathFollow2D.progress_ratio = randf()
 	new_mob.global_position = %PathFollow2D.global_position
 	add_child(new_mob)
 	
 func spawn_weapon():
-	var weapons_array = [preload("res://gun.tscn"), preload("res://laser_gun.tscn")]
+	var weapons_array = [preload("res://scenes/gun.tscn"), preload("res://scenes/laser_gun.tscn")]
 	var selected_weapon_index = randi() % (weapons_array.size())
 	#var selected_weapon_index = 1
 	# TODO: Add slot adaptility, for future multipule weapon holdings
@@ -115,11 +119,12 @@ func is_position_within_viewport(spawn_x, spawn_y, viewport_size, player_positio
 	return (spawn_x > player_position.x - viewport_size.x ) and (spawn_x < player_position.x + viewport_size.x ) and \
 		(spawn_y > player_position.y - viewport_size.y ) and (spawn_y < player_position.y + viewport_size.y )
 
-func is_near_weapon() -> bool:
+func is_near_weapon() -> bool: #TODO: implement this function to avoid nearby weapon spawning
 	return true
 	
 func _on_mob_spawner_timeout() -> void:
 	spawn_mob()
+	#pass
 
 
 func _on_player_health_depleted() -> void:
@@ -140,4 +145,4 @@ func _on_resume_button_pressed() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

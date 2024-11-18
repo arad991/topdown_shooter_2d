@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bx7jqvs8er1ee"]
+[gd_scene load_steps=9 format=3 uid="uid://ddeaivxxrkj4b"]
 
 [ext_resource type="PackedScene" uid="uid://chld75je6ysiw" path="res://player.tscn" id="1_ru3bt"]
 [ext_resource type="Script" path="res://survivors_game.gd" id="1_x6re0"]
@@ -158,9 +158,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -213.0
+offset_left = -268.0
 offset_top = 53.0
-offset_right = -68.0
+offset_right = -123.0
 offset_bottom = 93.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -176,9 +176,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
+offset_left = -268.0
 offset_top = 257.0
-offset_right = -81.0
+offset_right = -123.0
 offset_bottom = 297.0
 grow_horizontal = 2
 grow_vertical = 2

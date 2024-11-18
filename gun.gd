@@ -36,7 +36,7 @@ func _pistol_shoot_logic() -> void:
 			look_at(closest_enemy.global_position)
 
 func shoot() -> void:
-	const BULLET = preload("res://bullet.tscn")
+	const BULLET = preload("res://scenes/bullet.tscn")
 	var new_bullet = BULLET.instantiate()
 	%ShootingPoint.add_child(new_bullet)
 	new_bullet.global_position = %ShootingPoint.global_position

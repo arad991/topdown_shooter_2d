@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 		look_at(mouse_pos)
 
 func shoot():
-	const BULLET = preload("res://laser_bullet.tscn")
+	const BULLET = preload("res://scenes/laser_bullet.tscn")
 	var new_bullet = BULLET.instantiate()
 	%LaserShootingPoint.add_child(new_bullet)
 	new_bullet.global_position = %LaserShootingPoint.global_position

@@ -1,0 +1,115 @@
+[gd_scene load_steps=10 format=3 uid="uid://dtg6c05bdvx2v"]
+
+[ext_resource type="Script" path="res://laser_gun.gd" id="1_x2iob"]
+[ext_resource type="Texture2D" uid="uid://chiu11br7pb0b" path="res://laser_gun/laser_gun.png" id="2_n0ylh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02311"]
+atlas = ExtResource("2_n0ylh")
+region = Rect2(109, 49, 41, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b1efh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02311")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hrcce"]
+radius = 389.021
+
+[sub_resource type="Animation" id="Animation_q7dvo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_780pw"]
+resource_name = "float"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(115, -2.5), Vector2(115, -5), Vector2(115, -10)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6211t"]
+_data = {
+"RESET": SubResource("Animation_q7dvo"),
+"float": SubResource("Animation_780pw")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aj57c"]
+radius = 23.0
+height = 129.902
+
+[node name="LaserGun" type="Node2D"]
+script = ExtResource("1_x2iob")
+
+[node name="ShootTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.066
+autostart = true
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+position = Vector2(-30, 0)
+
+[node name="LaserGun" type="AnimatedSprite2D" parent="WeaponPivot"]
+scale = Vector2(3.41463, 3.05882)
+sprite_frames = SubResource("SpriteFrames_b1efh")
+autoplay = "default"
+
+[node name="LaserShootingPoint" type="Marker2D" parent="WeaponPivot/LaserGun"]
+unique_name_in_owner = true
+position = Vector2(16.9857, -1.96154)
+
+[node name="SpawnDetector" type="Area2D" parent="WeaponPivot/LaserGun"]
+position = Vector2(-43.9286, -7.84615)
+scale = Vector2(0.292857, 0.326923)
+collision_layer = 0
+collision_mask = 19
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPivot/LaserGun/SpawnDetector"]
+shape = SubResource("CircleShape2D_hrcce")
+
+[node name="FloatingAnimation" type="AnimationPlayer" parent="WeaponPivot"]
+unique_name_in_owner = true
+root_node = NodePath("../LaserGun")
+libraries = {
+"": SubResource("AnimationLibrary_6211t")
+}
+autoplay = "float"
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+position = Vector2(-30, 0)
+collision_layer = 16
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(113, -2)
+rotation = -1.57175
+shape = SubResource("CapsuleShape2D_aj57c")
+
+[connection signal="ready_for_animation" from="." to="." method="_on_ready_for_animation"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

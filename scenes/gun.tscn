@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://0e8xogo0sntl"]
+
+[ext_resource type="Texture2D" uid="uid://cswb5do8rrj7q" path="res://pistol/pistol.png" id="1_26tot"]
+[ext_resource type="Script" path="res://gun.gd" id="1_ptbya"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_75ks7"]
+radius = 1167.9
+
+[sub_resource type="Animation" id="Animation_jqa3j"]
+resource_name = "float"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pistol:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(91, 2), Vector2(91, -3), Vector2(91, -8)]
+}
+
+[sub_resource type="Animation" id="Animation_xjugf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pistol:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(91, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aqj0q"]
+_data = {
+"RESET": SubResource("Animation_xjugf"),
+"float": SubResource("Animation_jqa3j")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nkfy6"]
+radius = 32.9981
+height = 77.998
+
+[node name="Pistol" type="Node2D"]
+script = ExtResource("1_ptbya")
+
+[node name="ShootTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.3
+autostart = true
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+position = Vector2(-37, 0)
+
+[node name="Pistol" type="Sprite2D" parent="WeaponPivot"]
+position = Vector2(91, 2)
+texture = ExtResource("1_26tot")
+
+[node name="ShootingPoint" type="Marker2D" parent="WeaponPivot/Pistol"]
+unique_name_in_owner = true
+position = Vector2(25, -11)
+
+[node name="SpawnDetector" type="Area2D" parent="WeaponPivot/Pistol"]
+position = Vector2(-47, -9.84615)
+scale = Vector2(0.292857, 0.326923)
+collision_layer = 0
+collision_mask = 19
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPivot/Pistol/SpawnDetector"]
+shape = SubResource("CircleShape2D_75ks7")
+
+[node name="FloatingAnimation" type="AnimationPlayer" parent="WeaponPivot"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_aqj0q")
+}
+autoplay = "float"
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+position = Vector2(-37, 0)
+collision_layer = 16
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(92, 1)
+rotation = -1.57175
+shape = SubResource("CapsuleShape2D_nkfy6")
+
+[connection signal="ready_for_animation" from="." to="." method="_on_ready_for_animation"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]

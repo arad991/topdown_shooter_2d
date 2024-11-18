@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://igj30mcgtx1y"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_7eg2j"]
+[ext_resource type="Texture2D" uid="uid://be6lteswyeo8r" path="res://th.jpg" id="1_8ne14"]
+[ext_resource type="Texture2D" uid="uid://dt2tb1gbuosn4" path="res://game_logo.png" id="2_15iwp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aewc7"]
+bg_color = Color(1, 0.54902, 0.235294, 0.792157)
+
+[node name="MainMenu" type="Node"]
+script = ExtResource("1_7eg2j")
+
+[node name="Background" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -32.0
+offset_right = 7077.0
+offset_bottom = 3074.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.17845, 0.203935)
+texture = ExtResource("1_8ne14")
+stretch_mode = 1
+
+[node name="Logo" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -471.0
+offset_top = -298.0
+offset_right = 471.0
+offset_bottom = -107.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_15iwp")
+
+[node name="StartGame" type="Button" parent="."]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -254.0
+offset_top = -21.0
+offset_right = 288.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.0313726, 0, 0.0431373, 1)
+theme_override_font_sizes/font_size = 176
+theme_override_styles/normal = SubResource("StyleBoxFlat_aewc7")
+text = "START
+"
+
+[connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
