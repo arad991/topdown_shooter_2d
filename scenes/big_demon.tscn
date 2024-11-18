@@ -1,3 +1,92 @@
-[gd_scene format=3 uid="uid://c0vaxm3pqx771"]
+[gd_scene load_steps=11 format=3 uid="uid://c0vaxm3pqx771"]
 
-[node name="BigDemon" type="Node2D"]
+[ext_resource type="Script" path="res://big_demon.gd" id="1_ep7ad"]
+[ext_resource type="Texture2D" uid="uid://b3521ag5s3ajs" path="res://characters/big_demon/big_demon_run_anim_f0.png" id="1_g2rs8"]
+[ext_resource type="Texture2D" uid="uid://dhunxmxnmcnfy" path="res://characters/big_demon/big_demon_run_anim_f1.png" id="2_mi6d8"]
+[ext_resource type="Texture2D" uid="uid://dikdnmkvgnxh0" path="res://characters/big_demon/big_demon_run_anim_f2.png" id="3_0ux3i"]
+[ext_resource type="Texture2D" uid="uid://cytbam7oxvp02" path="res://characters/big_demon/big_demon_run_anim_f3.png" id="4_wdkoy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hxdcj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_g2rs8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_mi6d8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_0ux3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wdkoy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0tcay"]
+radius = 47.0
+height = 114.0
+
+[sub_resource type="Animation" id="Animation_511ak"]
+resource_name = "hurt"
+length = 0.1667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigDemonSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.419608), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_d304y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigDemonSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lbpjh"]
+_data = {
+"RESET": SubResource("Animation_d304y"),
+"hurt": SubResource("Animation_511ak")
+}
+
+[node name="BigDemon" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 131
+motion_mode = 1
+script = ExtResource("1_ep7ad")
+
+[node name="BigDemonSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-3, -60)
+scale = Vector2(2.8125, 3.27778)
+sprite_frames = SubResource("SpriteFrames_hxdcj")
+autoplay = "default"
+frame_progress = 0.894412
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -54)
+shape = SubResource("CapsuleShape2D_0tcay")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_lbpjh")
+}
