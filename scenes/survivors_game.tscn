@@ -48,7 +48,7 @@ rotation = 0.000616523
 progress = 5047.17
 
 [node name="MobSpawner" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.6
 autostart = true
 
 [node name="GameOver" type="CanvasLayer" parent="."]

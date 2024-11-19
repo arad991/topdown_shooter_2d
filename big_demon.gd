@@ -39,5 +39,8 @@ func spawn_little_demons(num_of_demons_to_spawn) -> void:
 	const SMALL_DEMON = preload("res://scenes/small_demon.tscn")
 	for i in num_of_demons_to_spawn:
 		var small_demon = SMALL_DEMON.instantiate()
+		small_demon.set_invincible_value(true)
 		small_demon.global_position = self.global_position + Vector2(randf_range(5, 10), randf_range(5, 10))
+		
 		game_manager.add_child(small_demon)
+		

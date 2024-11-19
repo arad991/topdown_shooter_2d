@@ -66,8 +66,8 @@ func spawn_tree():
 func spawn_mob():
 	var mobs_array = [preload("res://scenes/mob.tscn"), preload("res://scenes/big_demon.tscn"), preload("res://scenes/small_demon.tscn")]
 	#var new_mob = preload("res://scenes/mob.tscn").instantiate()
-	#var selected_mob_index = randi() % (mobs_array.size())
-	var selected_mob_index = 1
+	var selected_mob_index = randi() % (mobs_array.size())
+	#var selected_mob_index = 1 # FOR DEBUGGING CERTAIN MOB
 	var new_mob = mobs_array[selected_mob_index].instantiate()
 	%PathFollow2D.progress_ratio = randf()
 	new_mob.global_position = %PathFollow2D.global_position
