@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var health = 3
 const SCORE_ON_KILLED = 1
-const MOB_SPEED = 550.0
+var mob_speed = 550.0
 
 @export var is_invincible: bool = false
 
@@ -23,7 +23,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * MOB_SPEED
+	velocity = direction * mob_speed
 	
 	if is_invincible:
 		self.set_collision_layer_value(2, false)

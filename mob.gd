@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 var health = 2
+var mob_speed = 300.0
+
 const SCORE_ON_KILLED = 1
 
 @onready var player: CharacterBody2D = get_node("/root/Game/Player")
@@ -11,7 +13,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * 300.0
+	velocity = direction * mob_speed
 	move_and_slide()
 
 

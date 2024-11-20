@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 var health = 5
+var mob_speed = 450.0
+
 const SCORE_ON_KILLED = 3
 const NUM_OF_LITTLE_DEMONS = 2
-const MOB_SPEED = 450.0
+
 
 @onready var player: CharacterBody2D = get_node("/root/Game/Player")
 @onready var game_manager: Node2D = get_node("/root/Game")
@@ -14,7 +16,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
-	velocity = direction * MOB_SPEED
+	velocity = direction * mob_speed
 	move_and_slide()
 	
 
