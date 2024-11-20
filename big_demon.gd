@@ -17,6 +17,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * mob_speed
+	
+	if direction.x < 0:
+		%BigDemonSprite.flip_h = true
+	if direction.x > 0:
+		%BigDemonSprite.flip_h = false
+	
+	
 	move_and_slide()
 	
 

@@ -1,8 +1,8 @@
+Node2D
 AnimatedSprite2D
 AnimationPlayer
 CollisionShape2D
 CharacterBody2D
-Node2D
 Button
 TextureRect
 Node

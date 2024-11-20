@@ -24,7 +24,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * mob_speed
-	
+	#var facing_right = scale.x > 0
+
+	# Flip the sprite if necessary
+	if direction.x < 0:
+		%SmallDemonSprite.flip_h = true
+	if direction.x > 0:
+		%SmallDemonSprite.flip_h = false
+		
 	if is_invincible:
 		self.set_collision_layer_value(2, false)
 	else:

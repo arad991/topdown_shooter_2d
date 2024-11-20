@@ -1,0 +1,10 @@
+res://scenes/survivors_game.tscn
+res://survivors_game.gd
+res://mob.gd
+res://scenes/mobs_manager.gd
+res://scenes/big_demon.tscn
+res://scenes/mob.tscn
+res://characters/slime/slime.tscn
+res://scenes/small_demon.tscn
+res://small_demon.gd
+res://big_demon.gd

@@ -30,5 +30,5 @@ func take_damage(damage):
 		var smoke = SMOKE_SCENE.instantiate()
 		get_parent().add_child(smoke)
 		smoke.global_position = global_position
-		var mob_size = self.scale  # Get the mob's size from its AABB
+		var mob_size = self.scale  
 		smoke.scale = mob_size  # Scale the smoke node using the mob size
